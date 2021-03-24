@@ -127,7 +127,10 @@ func (s *Set) NoMatch(strMatch string, regexp *regexp.Regexp) *Set {
 	return s.validate(NoMatch{Matches{Regex: regexp}}, strMatch)
 }
 
-func (s *Set) Email() *Set {
+func (s *Set) Email(regex *regexp.Regexp) *Set {
+	if regex != nil {
+		return s.validate(Email{Matches{regex}}, s.toString())
+	}
 	return s.validate(Email{Matches{emailPattern}}, s.toString())
 }
 
